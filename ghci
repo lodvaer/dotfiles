@@ -1,0 +1,228 @@
+:set prompt "h> "
+
+:set -XPackageImports
+
+import Prelude
+
+import Control.Applicative
+import qualified Control.Concurrent as CC
+import qualified Control.Concurrent.STM as STM
+-- import Control.Exception
+import Control.Monad.Catch
+import Control.Lens
+import Control.Monad
+import Data.Char
+import Data.Constraint
+import Data.List
+import Data.Maybe
+import Data.Monoid
+
+import qualified Numeric as N
+:set -package newtype
+import qualified Control.Newtype as NT
+
+:set -package containers
+import qualified Data.Map as M
+import qualified Data.Set as S
+:set -package vector
+import qualified Data.Vector as V
+
+:set -package bytestring
+import qualified Data.ByteString as B
+import qualified Data.ByteString.Unsafe as BU
+import qualified Data.ByteString.Char8 as B8
+import qualified Data.ByteString.Lazy as LB
+import qualified Data.ByteString.Lazy.Char8 as LB8
+
+:set -package text
+import qualified Data.Text as T
+import qualified Data.Text.Encoding as TE
+import qualified Data.Text.Lazy as LT
+import qualified Data.Text.Lazy.Encoding as LTE
+
+import qualified Foreign.C as FC
+import qualified Foreign.C.String as FC
+import qualified Foreign.ForeignPtr as FFPtr
+import qualified Foreign.Ptr as FPtr
+
+:set -package memory
+import qualified Data.ByteArray as BA
+:set -package cryptonite
+import qualified "cryptonite" Crypto.Hash as CrH
+
+
+-- :set -package saltine
+-- import qualified Crypto.Saltine.Class as Saltine
+-- import qualified Crypto.Saltine.Internal.ByteSizes as Saltine
+-- import qualified Crypto.Saltine.Core.Auth as Auth
+-- import qualified Crypto.Saltine.Core.Box as Box
+-- import qualified Crypto.Saltine.Core.Hash as Hash
+-- import qualified Crypto.Saltine.Core.OneTimeAuth as OTA
+-- import qualified Crypto.Saltine.Core.ScalarMult as ScalarMult
+-- import qualified Crypto.Saltine.Core.SecretBox as SecretBox
+-- import qualified Crypto.Saltine.Core.Sign as Sign
+-- import qualified Crypto.Saltine.Core.Stream as Stream
+
+:set -package network
+import qualified Network.URI as URI
+import qualified Network.Socket as So
+import qualified Network.BSD as BSD
+
+-- # Extensions
+
+-- ## Derivation
+
+-- :set -XAutoDeriveTypeable
+-- Derives Typeable automatically. Sets -XDeriveDataTypeable
+
+:set -XDeriveDataTypeable
+-- deriving (Data, Typeable)
+
+:set -XDeriveGeneric
+-- deriving (Generic, Generic1)
+-- http://www.haskell.org/ghc/docs/7.8.2/html/users_guide/generic-programming.html
+
+:set -XGeneralizedNewtypeDeriving
+-- Allow automatic derivation of mostly everything for newtypes.
+
+
+-- ## Type machinery
+
+:set -XConstraintKinds
+-- (:k ClassName) ~ * -> Constraint
+-- (:k (~)) ~ * -> * -> Constraint -- -XTypeFamilies/-XGADTs
+-- (:k ?x::Int) ~ Constraint -- -XImplicitParams
+
+import GHC.TypeLits
+:set -XDataKinds
+-- :k 5 :: Nat
+-- :k "hello" :: Symbol
+
+:set -XEmptyCase
+-- case x of {} -- when x has no non-bottom values.
+-- Better than error, because it's inferred that it never can happen.
+
+:set -XGADTs
+-- data Term a where X :: { val :: Int } -> Term Int
+--                   Y :: Word -> Term Word
+--                   Succ :: Term Int -> Term Int
+-- /pattern matching causes type refinement/
+-- That's what makes the Wye/Tee in machines work.
+-- sets -XRelaxedPolyRec, -XGADTSyntax
+-- GADT-syntax must be used to make GADTs. GADT-syntax can make normal
+-- algebraic datatypes. GADTs cannot use deriving. Record syntax is OK.
+
+-- :set -XImplicitParams
+-- (?x :: Type) => ...
+
+-- :set -XIncoherentInstances
+-- :set -XOverlappingInstances
+-- Accept instances that overlap, where the head isn't smaller.
+
+:set -XNoMonomorphismRestriction
+-- For ghci only, doesn't concretize the types
+
+:set -XRelaxedPolyRec
+:set -XMonoLocalBinds
+-- Slightly alter type inference.
+
+:set -XTypeFamilies
+-- Type functions. Godly.
+
+-- :set -XPolyKinds
+-- Kind polymorphism, infer k -> */Constraint
+-- Just as in type inference, kind inference only allows moromorphic
+-- inference.
+-- Interferes with loading of modules with e.g.
+-- type X a = forall m. XT m a
+-- as this infers that m is of kind AnyK
+
+:set -XScopedTypeVariables
+-- Brings forall'd type variables into scope.
+-- k :: forall a. Num a => a; k = x where x :: a; x = fromIntegral 42
+
+:set -XRankNTypes
+:set -XExistentialQuantification
+-- Carry the method resolution along with the type when encapsulating.
+
+:set -XEmptyDataDecls
+:set -XStandaloneDeriving
+-- deriving instance X a => Y a
+:set -XFlexibleContexts
+:set -XFlexibleInstances
+:set -XDefaultSignatures
+
+-- ## Overloading
+
+-- :set -XOverloadedLists
+-- class IsList l where
+--   type Item l
+--
+--   fromList :: [Item l] -> l
+--   toList :: l -> [Item l]
+--   fromListN :: Int -> [Item l] -> l
+--   fromListN _ = fromList
+
+:set -XOverloadedStrings
+
+
+-- ## Syntax extensions
+
+:set -XArrows
+-- Arrow notation.
+
+:set -XBangPatterns
+-- Evaluates the pattern matched against to WHNF.
+
+:set -XPatternGuards
+-- clunky env k1 k2
+--     | Just x <- lookup env k1
+--     , Just y <- lookup env k2
+--         = x + y
+--     | otherwise
+--         = 0
+
+:set -XViewPatterns
+-- : view :: x -> y
+-- : f :: x -> z
+-- f x@(view -> Pattern y) = case y of f x
+-- == f x = case view x of Pattern y -> case y of f x
+-- ..       case x of (view -> Pattern y) -> ...
+
+:set -XLambdaCase
+-- \case x -> ... == \newName -> case newName of x -> ...
+
+:set -XMultiWayIf
+-- if | x -> y; ...; | z -> h == case () of x -> y; ...; z -> h
+
+:set -XRecordWildCards
+-- f Struct {x=5, ..} = ...
+
+:set -XNamedFieldPuns
+-- f Struct {x} = x
+
+:set -XTypeOperators
+-- type a :- b = X a b -- et al.
+
+
+
+-- ## Other
+
+-- :set -XQuasiQuotes
+-- :set -XTemplateHaskell
+
+-- :set -XForeignFunctionInterface
+-- foreign import X "elf symbol" func :: Very carefully set type
+-- X = interruptible -- -XInterruptibleFFI, aborts syscalls, SIGPIPE->EINTR
+-- X = safe -- clean the RTS and misc. safety
+-- X = unsafe -- don't.
+-- X = capi -- -XCApiFFI, C calling convention, call as if C.
+
+-- :set -XNoImplicitPrelude
+-- Doesn't import prelude.
+
+:{
+let factors :: Integer -> [Integer]
+    factors z = [x | x <- [1..ceiling (sqrt (fromInteger z) :: Double)]
+                   , z `mod` x == 0]
+:}

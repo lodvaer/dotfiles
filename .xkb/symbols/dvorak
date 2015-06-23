@@ -1,0 +1,236 @@
+xkb_symbols "keymap" {
+	// name[group1]="Norway - Dvorak";
+
+	key <TLDE> {
+		symbols[Group1]= [ dollar, bar, brokenbar, section],
+		symbols[Group2]= [ U2228, paragraph ] // ∨, ¶
+	};
+	key <AE01> {
+		symbols[Group1]= [ ampersand, 1, exclam, exclamdown],
+		symbols[Group2]= [ U2227 ] // ∧
+	};
+	key <AE02> {
+		symbols[Group1]=[ bracketleft, 2, at ]
+	};
+	key <AE03> {
+		symbols[Group1]= [ braceleft, 3, numbersign, sterling ],
+		symbols[Group2]= [ U220B, U220C ] // ∋ ∌
+	};
+	key <AE04> {
+		symbols[Group1]= [ braceright, 4, currency ]
+	};
+	key <AE05> {
+		symbols[Group1]= [ bracketright, 5, percent ]
+	};
+	key <AE06> {
+		symbols[Group1]= [ equal, 6, yen ],
+		symbols[Group2]= [ U2261, U2260, U2262 ] // ≡ ≠ ≢
+	};
+	key <AE07> {
+		symbols[Group1]= [ asterisk, 7 ],
+		symbols[Group2]= [ U2218, U229B ] // ∘ ⊛
+	};
+	key <AE08> {
+		symbols[Group1]= [ parenleft, 8 ]
+	};
+	key <AE09> {
+		symbols[Group1]= [ parenright, 9 ]
+	};
+	key <AE10> {
+		symbols[Group1]= [ 0, 0 ]
+	};
+	key <AE11> {
+		symbols[Group1]= [ plus, question, plusminus, questiondown ],
+		symbols[Group2]= [ U2295, U29FB ] // ⊕ ⧻
+	};
+	key <AE12> {
+		symbols[Group1]= [       backslash,           grave,      dead_acute,      dead_grave ]
+	};
+	key <BKSP> { [       BackSpace ] };
+	key  <TAB> { [             Tab,    ISO_Left_Tab ] };
+	key <AD01> {
+		symbols[Group1]= [ aring, Aring ]
+	};
+	key <AD02> {
+		symbols[Group1]= [ comma, semicolon,  less, guillemotleft  ],
+		symbols[Group2]= [ U00B7, NoSymbol, U2264, U226E ] // · _ ≤ ≮
+	};
+	key <AD03> {
+		symbols[Group1]= [ period,  colon,  greater, guillemotright ],
+		symbols[Group2]= [ U2026, U2237, U2265, U226F ] // … ∷ ≥ ≯
+	};
+	key <AD04> {
+		symbols[Group1]= [ p, P ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_pi,       Greek_PI ]
+	};
+	key <AD05> {
+		symbols[Group1]= [ y, Y, yen ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_upsilon,  Greek_UPSILON ]
+	};
+	key <AD06> {
+		symbols[Group1]= [ f, F, ordfeminine ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_phi, Greek_PHI ]
+	};
+	key <AD07> {
+		symbols[Group1]= [ g, G ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_gamma, Greek_GAMMA ]
+	};
+	key <AD08> {
+		symbols[Group1]= [ c, C, ccedilla, copyright ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_psi, Greek_PSI ]
+	};
+	key <AD09> {
+		symbols[Group1]= [ r, R, registered, trademark ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_rho, Greek_RHO ]
+	};
+	key <AD10> {
+		symbols[Group1]= [ l, L, U21DD, U21D2 ], // ⇝ ⇒
+		symbols[Group2]= [ rightarrow, U291A, // → ↣
+				   Greek_lambda, Greek_LAMBDA ]
+	};
+	key <AD11> {
+		symbols[Group1]= [ slash ]
+	};
+	key <AD12> {
+		symbols[Group1]= [ asciitilde, asciicircum, dead_diaeresis, dead_tilde ]
+	};
+	key <RTRN> {         [          Return ] };
+	key <LCTL> {         [       Control_L ] };
+	key <AC01> {
+		symbols[Group1]= [ a, A ],
+		symbols[Group2]= [ U2200, NoSymbol, // ∀
+				   Greek_alpha, Greek_ALPHA ]
+	};
+	key <AC02> {
+		symbols[Group1]= [ o, O ],
+		symbols[Group2]= [ U2205, NoSymbol, // ∅
+				   Greek_omicron, Greek_OMICRON ]
+	};
+	key <AC03> {
+		symbols[Group1]= [ e, E, EuroSign, cent ],
+		symbols[Group2]= [ U2208, U2209, // ∈ ∉
+				   Greek_epsilon, Greek_EPSILON ]
+	};
+	key <AC04> {
+		symbols[Group1]= [ u, U ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_theta, Greek_THETA]
+	};
+	key <AC05> {
+		symbols[Group1]= [ i, I, idotless, Iabovedot ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_iota, Greek_IOTA]
+	};
+	key <AC06> {
+		symbols[Group1]= [ d, D, eth, ETH ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_delta, Greek_DELTA ]
+	};
+	key <AC07> {
+		symbols[Group1]= [ h, H ],
+		symbols[Group2]= [ leftarrow, U2919, // ← ⤙
+				   Greek_eta, Greek_ETA ]
+	};
+	key <AC08> {
+		symbols[Group1]= [ t, T, thorn, THORN ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_tau, Greek_TAU ]
+	};
+	key <AC09> {
+		symbols[Group1]= [ n, N ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_nu, Greek_NU ]
+	};
+	key <AC10> {
+		symbols[Group1]= [ s, S, ssharp, NoSymbol ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_sigma, Greek_SIGMA ]
+	};
+	key <AC11> { // æ
+		symbols[Group1]= [ minus, underscore, U2010, diaeresis ], // -_‐¨
+		symbols[Group2]= [ U2013, U2014, U2011, U203E ] // –—‑‾
+	};
+	key <LFSH> {         [         Shift_L ] };
+	key <BKSL> { // '*
+		symbols[Group1]= [ quotedbl, apostrophe ]
+	};
+	key <LSGT> { // <>
+		symbols[Group1]= [oslash, Ooblique ]
+	};
+	key <AB01> { // z
+		symbols[Group1]= [ ae, AE, leftdoublequotemark, leftsinglequotemark ]
+	};
+	key <AB02> {
+		symbols[Group1]= [ q, Q, rightdoublequotemark, rightsinglequotemark ]
+	};
+	key <AB03> {
+		symbols[Group1]= [ j, J ],
+		symbols[Group2]= [ downarrow, NoSymbol,
+				   Greek_xi, Greek_XI ]
+	};
+	key <AB04> {
+		symbols[Group1]= [ k, K ],
+		symbols[Group2]= [ uparrow, NoSymbol,
+				   Greek_kappa, Greek_KAPPA ]
+	};
+	key <AB05> {
+		symbols[Group1]= [ x, X, multiply ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_chi, Greek_CHI ]
+	};
+	key <AB06> {
+		symbols[Group1]= [ b, B ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_beta, Greek_BETA ]
+	};
+	key <AB07> {
+		symbols[Group1]= [ m, M, mu ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_mu, Greek_MU ]
+	};
+	key <AB08> {
+		symbols[Group1]= [ w, W ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_finalsmallsigma, Greek_SIGMA ]
+	};
+	key <AB09> {
+		symbols[Group1]= [ v, V ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_omega, Greek_OMEGA ]
+	};
+	key <AB10> {
+		symbols[Group1]= [ z, Z ],
+		symbols[Group2]= [ NoSymbol, NoSymbol,
+				   Greek_zeta, Greek_ZETA ]
+	};
+	key <RTSH> {
+		[         Shift_R ]
+	};
+	key <KPMU> {
+		symbols[Group1]= [ KP_Multiply,   XF86ClearGrab ]
+	};
+	key <LALT> {
+		[           Alt_L,          Meta_L ]
+	};
+	key <SPCE> {
+		symbols[Group1]= [  space, space, nobreakspace, nobreakspace ]
+	};
+	key <CAPS> {
+		symbols[Group1]= [  Escape, Escape ]
+	};
+	key <LWIN> {
+		symbols[Group1]= [  Mode_switch, Mode_switch ]
+	};
+	key <RALT> {
+		type[Group1]= "ONE_LEVEL",
+		symbols[Group1]= [ ISO_Level3_Shift ]
+	};
+	modifier_map Mod5   { ISO_Level3_Shift };
+
+};

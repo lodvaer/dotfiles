@@ -1,0 +1,19 @@
+[color]
+	ui = auto
+[alias]
+	br = branch
+	ci = commit -S
+	co = checkout
+	d = diff
+	ds = diff --staged
+	l = log --pretty=fuller --show-signature --
+	lg = log --color --graph --pretty=format:'%Cred%h %C(cyan)%G? %Cgreen%ci%Creset %s %C(bold blue)<%an>%Creset%n%-b%n%-d' --
+	r = remote -v
+	s = status -s
+[user]
+	name = Lodvær
+	email = lodvaer@gmail.com
+[push]
+	default = simple
+[gpg]
+	program = gpg2
