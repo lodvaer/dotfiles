@@ -1,3 +1,4 @@
+" Strongly based on <https://github.com/begriffs/haskell-vim-now>
 set nocompatible
 set viminfo=
 set nobackup
@@ -211,7 +212,7 @@ map <leader>tg :!codex update<CR>:call system("git hscope")<CR><CR>:call LoadHsc
 
 map <leader>tt :TagbarToggle<CR>
 
-set csprg=~/.haskell-vim-now/bin/hscope
+set csprg=hscope
 set csto=1 " search codex tags first
 set cst
 set csverb
