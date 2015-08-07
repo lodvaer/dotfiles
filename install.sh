@@ -23,11 +23,14 @@ ln -f zshrc.local ~/.zshrc.local
 ln -f ghci ~/.ghci
 ln -f vimrc ~/.vimrc
 ln -f gvimrc ~/.gvimrc
-ln -f git-hscope ~/.local/bin/git-hscope
 mkdir -p ~/.config/herbstluftwm
 ln -f herbst_autostart ~/.config/herbstluftwm/autostart
 ln -f herbst_panel.sh ~/.config/herbstluftwm/panel.sh
 rsync -av --link-dest=$PWD .xkb/ ~/.xkb
+
+for f in bin/*; do
+	ln -f $f ~/.local/bin
+done
 
 # Only on hosts where I'm this alias.
 if [[ $USER = kitty ]]; then
