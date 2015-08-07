@@ -104,7 +104,7 @@ xkb_symbols "keymap" {
 	key <LCTL> {         [       Control_L ] };
 	key <AC01> {
 		symbols[Group1]= [ a, A ],
-		symbols[Group2]= [ U2200, NoSymbol, // ∀
+		symbols[Group2]= [ U2200, U2248, // ∀ ≈ (approximately)
 				   Greek_alpha, Greek_ALPHA ]
 	};
 	key <AC02> {
@@ -119,12 +119,12 @@ xkb_symbols "keymap" {
 	};
 	key <AC04> {
 		symbols[Group1]= [ u, U ],
-		symbols[Group2]= [ NoSymbol, NoSymbol,
+		symbols[Group2]= [ U222A, NoSymbol, // ∪ (union)
 				   Greek_theta, Greek_THETA]
 	};
 	key <AC05> {
 		symbols[Group1]= [ i, I, idotless, Iabovedot ],
-		symbols[Group2]= [ NoSymbol, NoSymbol,
+		symbols[Group2]= [ U2229, U2245, // ∩ (intersection) ≅ (isomorphic)
 				   Greek_iota, Greek_IOTA]
 	};
 	key <AC06> {
@@ -139,12 +139,12 @@ xkb_symbols "keymap" {
 	};
 	key <AC08> {
 		symbols[Group1]= [ t, T, thorn, THORN ],
-		symbols[Group2]= [ NoSymbol, NoSymbol,
+		symbols[Group2]= [ U22A4, therefore, // ⊤ (top)
 				   Greek_tau, Greek_TAU ]
 	};
 	key <AC09> {
 		symbols[Group1]= [ n, N ],
-		symbols[Group2]= [ NoSymbol, NoSymbol,
+		symbols[Group2]= [ U00AC, NoSymbol, // ¬ (Not)
 				   Greek_nu, Greek_NU ]
 	};
 	key <AC10> {
@@ -181,12 +181,12 @@ xkb_symbols "keymap" {
 	};
 	key <AB05> {
 		symbols[Group1]= [ x, X, multiply ],
-		symbols[Group2]= [ NoSymbol, NoSymbol,
+		symbols[Group2]= [ U2203, NoSymbol, // ∃ (eXists)
 				   Greek_chi, Greek_CHI ]
 	};
 	key <AB06> {
 		symbols[Group1]= [ b, B ],
-		symbols[Group2]= [ NoSymbol, NoSymbol,
+		symbols[Group2]= [ U22A5, because, // ⊥ (bottom)
 				   Greek_beta, Greek_BETA ]
 	};
 	key <AB07> {

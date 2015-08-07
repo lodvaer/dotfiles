@@ -19,9 +19,7 @@ for x in zshrc.d/*; do
 done
 
 mkdir -p ~/.gnupg
-ln -f gpg.conf ~/.gnupg/gpg.conf
 ln -f zshrc.local ~/.zshrc.local
-ln -f gitconfig ~/.gitconfig
 ln -f ghci ~/.ghci
 ln -f vimrc ~/.vimrc
 ln -f gvimrc ~/.gvimrc
@@ -29,6 +27,15 @@ mkdir -p ~/.config/herbstluftwm
 ln -f herbst_autostart ~/.config/herbstluftwm/autostart
 ln -f herbst_panel.sh ~/.config/herbstluftwm/panel.sh
 rsync -av --link-dest=$PWD .xkb/ ~/.xkb
+
+# Only on hosts where I'm this alias.
+if [[ $USER = kitty ]]; then
+	ln -f gitconfig ~/.gitconfig
+	ln -f gpg.conf ~/.gnupg/gpg.conf
+else
+	cp gpg.conf ~/.gnupg/gpg.conf
+	sed -i s/kitty/$USER/g ~/.gnupg/gpg.conf
+fi
 
 cp solarized/xresources/solarized ~/.Xresources
 sed s/002b36/001b26/ -i ~/.Xresources
@@ -39,19 +46,22 @@ if [[ ! -d ~/.vim/bundle/Vundle.vim ]]; then
 		~/.vim/bundle/Vundle.vim
 	vim +PluginInstall +qa'!'
 	pushd ~/.vim/bundle/vimproc.vim
-	make -f make -f make_unix.mak
+	make -f make_unix.mak
 	popd
 fi
 
-guihosts=( aspergoid schizoid )
+guihosts=( aspergoid schizoid ghost )
 
 if [[ $guihosts[(I)`hostname`] != 0 && \
-		! -d ~/.local/share/fonts/googlefontdirectory ]]; then
+		! -d ~/.local/share/fonts/googlefonts ]]; then
 	mkdir -p ~/.local/share/fonts
-	git clone https://github.com/w0ng/googlefontdirectory
+	pushd ~/.local/share/fonts
+	git clone https://github.com/google/fonts googlefonts
 	fc-cache -fv
+	popd
 elif [[ $guihosts[(I)`hostname`] != 0 ]]; then
-	cd ~/.local/share/fonts/googlefontdirectory
+	pushd ~/.local/share/fonts/googlefonts
 	git pull
 	fc-cache -fv
+	popd
 fi

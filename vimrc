@@ -44,8 +44,7 @@ Bundle 'tpope/vim-commentary'
 Bundle 'godlygeek/tabular'
 
 " Haskell
-Bundle 'travitch/hasksyn'
-" Bundle 'begriffs/vim-haskellConceal'
+Bundle 'raichoo/haskell-vim'
 if executable("ghc-mod")
     Bundle 'eagletmt/ghcmod-vim'
 endif
@@ -88,7 +87,7 @@ set hidden
 set lazyredraw
 set ruler
 set incsearch ignorecase smartcase hlsearch
-set wrap linebreak textwidth=80 colorcolumn=80
+set wrap linebreak textwidth=79 colorcolumn=80
 set foldmethod=marker foldlevel=20
 set list listchars=tab:-\ ,trail:~,extends:>,precedes:<,nbsp:+
 set cmdheight=1
@@ -211,7 +210,7 @@ map <leader>tg :!codex update<CR>:call system("git hscope")<CR><CR>:call LoadHsc
 
 map <leader>tt :TagbarToggle<CR>
 
-set csprg=~/.haskell-vim-now/bin/hscope
+set csprg=hscope
 set csto=1 " search codex tags first
 set cst
 set csverb
