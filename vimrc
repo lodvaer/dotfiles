@@ -1,3 +1,4 @@
+" Strongly based on <https://github.com/begriffs/haskell-vim-now>
 set nocompatible
 set viminfo=
 set nobackup
