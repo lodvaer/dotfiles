@@ -1,0 +1,9 @@
+#!/bin/zsh
+dbpath=$(echo ~/.cabal/**/hoogle*/databases/)
+for file in ~/.cabal/share/doc/*-ghc-*/**/html/*.txt; do
+	hoogle convert $file $dbpath/${${file%%.txt}:t}.hoo
+done
+
+paths=($dbpath/*.hoo)
+hoogle combine ${paths:#default.hoo} -o ~/tmp/hoo-$$.hoo
+mv ~/tmp/hoo-$$.hoo $dbpath/default.hoo

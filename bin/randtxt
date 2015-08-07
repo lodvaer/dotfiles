@@ -1,0 +1,1 @@
+head -c 128 /dev/urandom | tr -cd '[a-zA-Z0-9&\[{}\]=*()+\!@#*]'
