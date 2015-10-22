@@ -17,12 +17,17 @@ mkdir -p ~/.zshrc.d
 for x in zshrc.d/*; do
 	ln -f $x ~/.zshrc.d/"$(basename $x)"
 done
+for x in sv/*; do
+	mkdir -p ~/$x
+	ln -f $x/* ~/$x
+done
 
 mkdir -p ~/.gnupg ~/.local/bin
 ln -f zshrc.local ~/.zshrc.local
 ln -f ghci ~/.ghci
 ln -f vimrc ~/.vimrc
 ln -f gvimrc ~/.gvimrc
+ln -f rtorrent.rc ~/.rtorrent.rc
 mkdir -p ~/.config/herbstluftwm
 ln -f herbst_autostart ~/.config/herbstluftwm/autostart
 ln -f herbst_panel.sh ~/.config/herbstluftwm/panel.sh
@@ -65,7 +70,10 @@ if [[ $guihosts[(I)`hostname`] != 0 && \
 	popd
 elif [[ $guihosts[(I)`hostname`] != 0 ]]; then
 	pushd ~/.local/share/fonts/googlefonts
+	old="`cat .git/refs/heads/master`"
 	git pull
-	fc-cache -fv
+	if [[ `cat .git/refs/heads/master` != $old ]]; then
+		fc-cache -fv
+	fi
 	popd
 fi

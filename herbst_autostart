@@ -28,6 +28,9 @@ hc keybind $Mod-q spawn dmenu_run
 hc keybind $Mod-y spawn setxkbmap no
 hc keybind $Mod-n spawn slock
 
+hc keybind $Mod-Pause spawn setxkbmap no
+hc keybind $Mod-Scroll_Lock spawn ~/.xkb/install.sh
+
 hc keybind XF86AudioMute spawn amixer -q -c 1 sset Master toggle
 hc keybind Mod1-XF86AudioMute spawn amixer -q -c 0 sset PCM toggle
 hc keybind XF86AudioRaiseVolume spawn amixer -q -c 1 sset Master 3+

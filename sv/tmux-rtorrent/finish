@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+tmux send-keys -t rt:rtorrent C-q
+while pidof rtorrent > /dev/null; do
+	sleep 0.5
+	echo rtorrent still running...
+done
+tmux kill-session -t rt

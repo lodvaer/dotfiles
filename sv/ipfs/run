@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /home/kitty/prog/src/go/bin/ipfs daemon
