@@ -62,6 +62,11 @@ try
 catch
 endtry
 
+" Text
+Bundle 'dhruvasagar/vim-table-mode'
+let g:table_mode_corner_corner="+"
+let g:table_mode_header_fillchar="="
+
 " Adjust signscolumn and syntastic to match wombat
 hi! link SignColumn LineNr
 hi! link SyntasticErrorSign ErrorMsg

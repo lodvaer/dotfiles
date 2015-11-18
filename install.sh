@@ -26,6 +26,8 @@ ln -f gvimrc ~/.gvimrc
 mkdir -p ~/.config/herbstluftwm
 ln -f herbst_autostart ~/.config/herbstluftwm/autostart
 ln -f herbst_panel.sh ~/.config/herbstluftwm/panel.sh
+mkdir -p ~/.config/dunst
+ln -f dunstrc ~/.config/dunst/dunstrc
 rsync -av --link-dest=$PWD .xkb/ ~/.xkb
 
 for f in bin/*; do
