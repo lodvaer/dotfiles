@@ -23,7 +23,7 @@ git submodule update --init
 
 mkdir -p ~/.zshrc.d
 for x in zshrc.d/*; do
-	ln -f $x ~/.zshrc.d/"$(basename $x)"
+	ln -f $x ~/.zshrc.d/"${x:t}"
 done
 for x in sv/*; do
 	mkdir -p ~/$x
@@ -41,6 +41,7 @@ ln -f herbst_autostart ~/.config/herbstluftwm/autostart
 ln -f herbst_panel.sh ~/.config/herbstluftwm/panel.sh
 mkdir -p ~/.config/dunst
 ln -f dunstrc ~/.config/dunst/dunstrc
+ln -f gpg.conf ~/.gnupg/gpg.conf
 rsync -av --link-dest=$PWD .xkb/ ~/.xkb
 
 for f in bin/*; do
@@ -50,10 +51,6 @@ done
 # Only on hosts where I'm this alias.
 if [[ $USER = kitty ]]; then
 	ln -f gitconfig ~/.gitconfig
-	ln -f gpg.conf ~/.gnupg/gpg.conf
-else
-	cp gpg.conf ~/.gnupg/gpg.conf
-	sed -i s/kitty/$USER/g ~/.gnupg/gpg.conf
 fi
 
 cp solarized/xresources/solarized ~/.Xresources
