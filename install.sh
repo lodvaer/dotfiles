@@ -69,16 +69,13 @@ if [[ ! -d ~/.vim/bundle/Vundle.vim ]]; then
 	popd
 fi
 
-guihosts=( aspergoid schizoid ghost )
-
-if [[ $guihosts[(I)`hostname`] != 0 && \
-		! -d ~/.local/share/fonts/googlefonts ]]; then
+if [[ -n "$DISPLAY" && ! -d ~/.local/share/fonts/googlefonts ]]; then
 	mkdir -p ~/.local/share/fonts
 	pushd ~/.local/share/fonts
 	git clone https://github.com/google/fonts googlefonts
 	fc-cache -fv
 	popd
-elif [[ $guihosts[(I)`hostname`] != 0 ]]; then
+elif [[ -n "$DISPLAY" ]]; then
 	pushd ~/.local/share/fonts/googlefonts
 	old="`cat .git/refs/heads/master`"
 	git pull
