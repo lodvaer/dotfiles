@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+. /etc/profile
+export PATH="$HOME/bin:$PATH"
+
 tmux new-session -s rt -n rtorrent -d rtorrent
 tmux new-window -at rt -n rssrtorrent rssrtorrent.py
 exec chpst -b tmux-rtorrent pause

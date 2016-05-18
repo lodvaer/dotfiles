@@ -25,7 +25,7 @@ hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
 hc keybind $Mod-Return spawn urxvt -tr -sh 100 -tint '#203B36' +vb -sl 5000 +sb -fn xft:inconsolata:10
 hc keybind $Mod-q spawn dmenu_run
-hc keybind $Mod-y spawn setxkbmap no
+hc keybind $Mod-Insert spawn ~/bin/paste
 hc keybind $Mod-n spawn slock
 
 hc keybind $Mod-Pause spawn setxkbmap no

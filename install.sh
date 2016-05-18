@@ -1,12 +1,20 @@
 #!/bin/zsh
 
 err=0
-for i in urxvt rsync vim dmenu_run make; do
+for i in rsync vim make; do
 	if [[ ! -x $(which $i) ]]; then
 		echo Needs $i >&2
 		err=1
 	fi
 done
+if [[ -n "$DISPLAY" ]]; then
+	for i in urxvt dmenu_run; do
+		if [[ ! -x $(which $i) ]]; then
+			echo Probably needs $i >&2
+			err=1
+		fi
+	done
+fi
 if [[ $err != 0 ]]; then
 	exit $err
 fi

@@ -51,6 +51,7 @@ if executable("ghc-mod")
 endif
 Bundle 'eagletmt/neco-ghc'
 Bundle 'Twinside/vim-hoogle'
+Bundle 'pbrisbin/vim-syntax-shakespeare'
 
 " Idris
 Bundle 'idris-hackers/idris-vim'
@@ -105,7 +106,7 @@ set magic
 set showmatch mat=2
 set laststatus=2
 set wildignore+=.git\*,.hg\*,.svn\*
-highlight ColorColumn guibg=#422 ctermbg=10
+highlight ColorColumn guibg=#442222 ctermbg=10
 
 let mapleader = ","
 let g:mapleader = ","
