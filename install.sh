@@ -8,7 +8,7 @@ for i in rsync vim make; do
 	fi
 done
 if [[ -n "$DISPLAY" ]]; then
-	for i in urxvt dmenu_run; do
+	for i in urxvt dmenu_run xdotool xclip; do
 		if [[ ! -x $(which $i) ]]; then
 			echo Probably needs $i >&2
 			err=1
