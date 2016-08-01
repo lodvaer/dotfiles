@@ -45,7 +45,7 @@ Bundle 'tpope/vim-commentary'
 Bundle 'godlygeek/tabular'
 
 " Haskell
-Bundle 'raichoo/haskell-vim'
+" Bundle 'raichoo/haskell-vim'
 if executable("ghc-mod")
     Bundle 'eagletmt/ghcmod-vim'
 endif
@@ -249,7 +249,7 @@ endfunction
 
 command! -nargs=1 GGrep call NonintrusiveGitGrep(<q-args>)
 nmap <leader>gs :Gstatus<CR>
-nmap <leader>gg :copen<CR>:GGrep 
+nmap <leader>gg :copen<CR>:GGrep
 nmap <leader>gl :Extradite!<CR>
 nmap <leader>gd :Gdiff<CR>
 nmap <leader>gb :Gblame<CR>
@@ -339,5 +339,5 @@ aut FileType cabal setl sw=4 et
 aut FileType yaml setl ts=2 sts=0 et
 
 if filereadable(glob("~/.vimrc.local"))
-	source ~/.vimrc.local
+    source ~/.vimrc.local
 endif

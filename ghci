@@ -48,7 +48,6 @@ import qualified Foreign.Ptr as FPtr
 :set -package memory
 import qualified Data.ByteArray as BA
 :set -package cryptonite
-:set -hide-package cryptohash
 import qualified Crypto.Hash as CrH
 
 

@@ -13,17 +13,23 @@ hc emit_hook reload
 # remove all existing keybindings
 hc keyunbind --all
 
-hc detect_monitors
-
 # keybindings
 # if you have a super key you will be much happier with Mod set to Mod4
 Mod=Mod1    # Use alt as the main modifier
 #Mod=Mod4   # Use the super key as the main modifier
 
+if [ "$HOSTNAME" == "aspergoid" ]; then
+	fontsize=13
+else
+	fontsize=10
+fi
+
 # hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
-hc keybind $Mod-Return spawn urxvt -tr -sh 100 -tint '#203B36' +vb -sl 5000 +sb -fn xft:inconsolata:10
+hc keybind $Mod-Return spawn \
+	urxvt -tr -sh 100 -tint '#2b1b06' \
+	+vb -sl 5000 +sb -fn xft:inconsolata:size=$fontsize
 hc keybind $Mod-q spawn dmenu_run
 hc keybind $Mod-Insert spawn ~/bin/paste
 hc keybind $Mod-n spawn slock
@@ -172,7 +178,7 @@ herbstclient set tree_style '╾│ ├└╼─┐'
 # do multi monitor setup here, e.g.:
 # hc set_monitors 1280x1024+0+0 1280x1024+1280+0
 # or simply:
-# hc detect_monitors
+hc detect_monitors
 
 # find the panel
 panel=~/.config/herbstluftwm/panel.sh
