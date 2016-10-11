@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export TZ=Europe/Oslo
+
 hc() { "${herbstclient_command[@]:-herbstclient}" "$@" ;}
 monitor=${1:-0}
 geometry=( $(herbstclient monitor_rect "$monitor") )

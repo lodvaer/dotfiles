@@ -57,26 +57,30 @@ cp solarized/xresources/solarized ~/.Xresources
 sed s/002b36/001b26/ -i ~/.Xresources
 
 if [[ ! -d ~/.vim/bundle/Vundle.vim ]]; then
-	mkdir -p ~/.vim/bundle
-	git clone https://github.com/gmarik/Vundle.vim.git \
-		~/.vim/bundle/Vundle.vim
-	vim +PluginInstall +qa'!'
-	pushd ~/.vim/bundle/vimproc.vim
-	make -f make_unix.mak
-	popd
+	mkdir -p ~/.vim/bundle/repos/github.com/Shougo
+	git clone https://github.com/Shougo/dein.vim.git \
+		~/.vim/bundle/repos/github.com/Shougo/dein.vim
+	vim +'call dein#install()' +qa'!'
 fi
 
 if [[ -n "$DISPLAY" && ! -d ~/.local/share/fonts/googlefonts ]]; then
 	mkdir -p ~/.local/share/fonts
 	pushd ~/.local/share/fonts
 	git clone https://github.com/google/fonts googlefonts
+	git clone https://github.com/powerline/fonts powerline-fonts
 	fc-cache -fv
 	popd
 elif [[ -n "$DISPLAY" ]]; then
-	pushd ~/.local/share/fonts/googlefonts
-	old="`cat .git/refs/heads/master`"
+	pushd ~/.local/share/fonts
+	local p=.git/refs/heads/master
+	old="`cat googlefonts/$p``cat powerline-fonts/$p`"
+	pushd googlefonts
 	git pull
-	if [[ `cat .git/refs/heads/master` != $old ]]; then
+	popd
+	pushd powerline-fonts
+	git pull
+	popd
+	if [[ "`cat googlefonts/$p``cat powerline-fonts/$p`" != "$old" ]]; then
 		fc-cache -fv
 	fi
 	popd
