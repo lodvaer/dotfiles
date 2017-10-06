@@ -14,54 +14,68 @@ autocmd GUIEnter * set visualbell t_vb=
 
 set runtimepath+=~/.vim/bundle/repos/github.com/Shougo/dein.vim
 
-call dein#begin('~/.vim/bundle')
+if dein#load_state('~/.vim/bundle')
+  call dein#begin('~/.vim/bundle')
 
-" Misc
-call dein#add('Shougo/dein.vim')
-call dein#add('Shougo/vimproc.vim', { 'build': 'make' })
+  " Misc
+  call dein#add('Shougo/dein.vim')
+  call dein#add('Shougo/vimproc.vim', { 'build': 'make' })
 
-" UI
-call dein#add('scrooloose/nerdtree')
-call dein#add('vim-syntastic/syntastic')
-call dein#add('vim-airline/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
-call dein#add('sheerun/vim-wombat-scheme')
+  " UI
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('vim-syntastic/syntastic')
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('sheerun/vim-wombat-scheme')
+  call dein#add('rafi/awesome-vim-colorschemes')
 
-" Editing
-call dein#add('scrooloose/nerdcommenter')
-call dein#add('godlygeek/tabular')
-call dein#add('ervandew/supertab')
-if has('nvim')
-  call dein#add('Shougo/deoplete.nvim')
-else
-  call dein#add('Shougo/neocomplete.vim')
+  " Editing
+  call dein#add('scrooloose/nerdcommenter')
+  call dein#add('godlygeek/tabular')
+  if has('nvim')
+    call dein#add('Shougo/deoplete.nvim')
+  else
+    call dein#add('Shougo/neocomplete.vim')
+  endif
+  call dein#add('dhruvasagar/vim-table-mode')
+  call dein#add('xolox/vim-misc')
+  " call dein#add('xolox/vim-easytags')
+
+  " SCM
+  call dein#add('tpope/vim-fugitive')
+
+  " fasm
+  call dein#add('RIscRIpt/vim-fasm-syntax')
+
+  " C
+  if has('nvim')
+    call dein#add('zchee/deoplete-clang')
+  else
+    call dein#add('Rip-Rip/clang_complete')
+  endif
+
+  " Haskell
+  call dein#add('neovimhaskell/haskell-vim')
+  call dein#add('bitc/vim-hdevtools')
+  call dein#add('eagletmt/neco-ghc')
+
+  " call dein#add('majutsushi/tagbar')
+  call dein#add('derekwyatt/vim-fswitch')
+
+  call dein#add('tpope/vim-fugitive')
+
+  call dein#end()
+  call dein#save_state()
 endif
-call dein#add('dhruvasagar/vim-table-mode')
-
-" SCM
-call dein#add('tpope/vim-fugitive')
-
-" C
-if has('nvim')
-  call dein#add('zchee/deoplete-clang')
-else
-  call dein#add('Rip-Rip/clang_complete')
-endif
-
-" fasm
-call dein#add('RIscRIpt/vim-fasm-syntax')
-
-" Haskell
-call dein#add('neovimhaskell/haskell-vim')
-call dein#add('bitc/vim-hdevtools')
-call dein#add('eagletmt/neco-ghc')
-
-call dein#end()
 
 syntax on
 filetype plugin indent on
 set hidden
 set lazyredraw
+
+if dein#check_install()
+  call dein#install()
+endif
 
 " Editing
 set wrap linebreak textwidth=79 colorcolumn=80
@@ -70,23 +84,27 @@ set formatoptions+=rolj
 set formatoptions-=t
 let g:mapleader = ","
 
-let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
-
-if has("gui_running")
-  imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-else " no gui
-  if has("unix")
-    inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-  endif
-endif
-
 vnoremap <Leader>t= :Tabularize /=<CR>
 vnoremap <Leader>t: :Tabularize /::<CR>
 vnoremap <Leader>t- :Tabularize /-><CR>
 
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#disable_auto_complete = 1
+call deoplete#custom#set('around', 'rank', 50)
+
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+inoremap <silent><expr> <TAB>
+\ pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" :
+\ deoplete#mappings#manual_complete()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
 "" Table mode
-let g:table_mode_corner_corner="+"
-let g:table_mode_header_fillchar="="
+let g:table_mode_corner="|"
 
 " Searching
 set incsearch ignorecase smartcase hlsearch
@@ -113,6 +131,8 @@ noremap <C-p> :bp<CR>
 noremap <Leader>n  :NERDTreeToggle<CR>
 set mouse=nv
 
+let NERDTreeIgnore = ['\.pyc$', '\.egg-info$']
+
 " .vimrc
 augroup sourcing
   autocmd!
@@ -126,6 +146,10 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+
+" Tagbar
+
+nmap <F8> :TagbarToggle<CR>
 
 " Languages
 
@@ -190,12 +214,27 @@ augroup yaml
   autocmd FileType yaml setl sw=2 et
 augroup end
 
-" C
+"" C & CPP
 
 augroup c
   autocmd!
-  autocmd FileType c setl noet sw=4 ts=8 omnifunc=ClangComplete
-  autocmd FileType c setl cinoptions=>2s,p2s,t0,+4,(0,U1,:0,=2s
+  autocmd FileType c setl noet sw=4 ts=8
+  autocmd FileType c setl cinoptions=>2s,p2s,t0,+4,(0,U1,:0,=2s " )
+augroup end
+
+let g:deoplete#sources#clang#clang_header = '/usr/lib/clang'
+let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+
+" misc
+
+augroup matlab
+  autocmd!
+  autocmd FileType matlab setl et sw=4 ts=4
+augroup end
+
+augroup groovy
+  autocmd!
+  autocmd FileType groovy setl et noai ts=4 sw=4
 augroup end
 
 " asm

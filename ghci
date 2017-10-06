@@ -7,6 +7,7 @@ import Prelude
 import Control.Applicative
 import qualified Control.Concurrent as CC
 import qualified Control.Concurrent.STM as STM
+import qualified Data.IORef as IORef
 -- import Control.Exception
 import Control.Monad.Catch
 import Control.Lens
@@ -40,16 +41,24 @@ import qualified Data.Text.Encoding as TE
 import qualified Data.Text.Lazy as LT
 import qualified Data.Text.Lazy.Encoding as LTE
 
+import qualified Foreign as F
 import qualified Foreign.C as FC
 import qualified Foreign.C.String as FC
 import qualified Foreign.ForeignPtr as FFPtr
 import qualified Foreign.Ptr as FPtr
+
+import qualified Foreign as FFI
+import qualified Foreign.C as FFI
+import qualified Foreign.C.String as FFI
+import qualified Foreign.ForeignPtr as FFI
+import qualified Foreign.Ptr as FFI
 
 :set -package memory
 import qualified Data.ByteArray as BA
 :set -package cryptonite
 import qualified Crypto.Hash as CrH
 
+import qualified Data.Time as Ti
 
 -- :set -package saltine
 -- import qualified Crypto.Saltine.Class as Saltine
@@ -75,34 +84,34 @@ import qualified Network.BSD as BSD
 -- :set -XAutoDeriveTypeable
 -- Derives Typeable automatically. Sets -XDeriveDataTypeable
 
-:set -XDeriveDataTypeable
+-- :set -XDeriveDataTypeable
 -- deriving (Data, Typeable)
 
-:set -XDeriveGeneric
+-- :set -XDeriveGeneric
 -- deriving (Generic, Generic1)
 -- http://www.haskell.org/ghc/docs/7.8.2/html/users_guide/generic-programming.html
 
-:set -XGeneralizedNewtypeDeriving
+-- :set -XGeneralizedNewtypeDeriving
 -- Allow automatic derivation of mostly everything for newtypes.
 
 
 -- ## Type machinery
 
-:set -XConstraintKinds
+-- :set -XConstraintKinds
 -- (:k ClassName) ~ * -> Constraint
 -- (:k (~)) ~ * -> * -> Constraint -- -XTypeFamilies/-XGADTs
 -- (:k ?x::Int) ~ Constraint -- -XImplicitParams
 
 import GHC.TypeLits
-:set -XDataKinds
+-- :set -XDataKinds
 -- :k 5 :: Nat
 -- :k "hello" :: Symbol
 
-:set -XEmptyCase
+-- :set -XEmptyCase
 -- case x of {} -- when x has no non-bottom values.
 -- Better than error, because it's inferred that it never can happen.
 
-:set -XGADTs
+-- :set -XGADTs
 -- data Term a where X :: { val :: Int } -> Term Int
 --                   Y :: Word -> Term Word
 --                   Succ :: Term Int -> Term Int
@@ -119,14 +128,14 @@ import GHC.TypeLits
 -- :set -XOverlappingInstances
 -- Accept instances that overlap, where the head isn't smaller.
 
-:set -XNoMonomorphismRestriction
+-- :set -XNoMonomorphismRestriction
 -- For ghci only, doesn't concretize the types
 
-:set -XRelaxedPolyRec
-:set -XMonoLocalBinds
+-- :set -XRelaxedPolyRec
+-- :set -XMonoLocalBinds
 -- Slightly alter type inference.
 
-:set -XTypeFamilies
+-- :set -XTypeFamilies
 -- Type functions. Godly.
 
 -- :set -XPolyKinds
@@ -137,20 +146,20 @@ import GHC.TypeLits
 -- type X a = forall m. XT m a
 -- as this infers that m is of kind AnyK
 
-:set -XScopedTypeVariables
+-- :set -XScopedTypeVariables
 -- Brings forall'd type variables into scope.
 -- k :: forall a. Num a => a; k = x where x :: a; x = fromIntegral 42
 
-:set -XRankNTypes
-:set -XExistentialQuantification
+-- :set -XRankNTypes
+-- :set -XExistentialQuantification
 -- Carry the method resolution along with the type when encapsulating.
 
-:set -XEmptyDataDecls
-:set -XStandaloneDeriving
+-- :set -XEmptyDataDecls
+-- :set -XStandaloneDeriving
 -- deriving instance X a => Y a
-:set -XFlexibleContexts
-:set -XFlexibleInstances
-:set -XDefaultSignatures
+-- :set -XFlexibleContexts
+-- :set -XFlexibleInstances
+-- :set -XDefaultSignatures
 
 -- ## Overloading
 
@@ -163,18 +172,18 @@ import GHC.TypeLits
 --   fromListN :: Int -> [Item l] -> l
 --   fromListN _ = fromList
 
-:set -XOverloadedStrings
+-- :set -XOverloadedStrings
 
 
 -- ## Syntax extensions
 
-:set -XArrows
+-- :set -XArrows
 -- Arrow notation.
 
-:set -XBangPatterns
+-- :set -XBangPatterns
 -- Evaluates the pattern matched against to WHNF.
 
-:set -XPatternGuards
+-- :set -XPatternGuards
 -- clunky env k1 k2
 --     | Just x <- lookup env k1
 --     , Just y <- lookup env k2
@@ -182,26 +191,26 @@ import GHC.TypeLits
 --     | otherwise
 --         = 0
 
-:set -XViewPatterns
+-- :set -XViewPatterns
 -- : view :: x -> y
 -- : f :: x -> z
 -- f x@(view -> Pattern y) = case y of f x
 -- == f x = case view x of Pattern y -> case y of f x
 -- ..       case x of (view -> Pattern y) -> ...
 
-:set -XLambdaCase
+-- :set -XLambdaCase
 -- \case x -> ... == \newName -> case newName of x -> ...
 
-:set -XMultiWayIf
+-- :set -XMultiWayIf
 -- if | x -> y; ...; | z -> h == case () of x -> y; ...; z -> h
 
-:set -XRecordWildCards
+-- :set -XRecordWildCards
 -- f Struct {x=5, ..} = ...
 
-:set -XNamedFieldPuns
+-- :set -XNamedFieldPuns
 -- f Struct {x} = x
 
-:set -XTypeOperators
+-- :set -XTypeOperators
 -- type a :- b = X a b -- et al.
 
 
@@ -222,7 +231,12 @@ import GHC.TypeLits
 -- Doesn't import prelude.
 
 :{
-let factors :: Integer -> [Integer]
-    factors z = [x | x <- [1..ceiling (sqrt (fromInteger z) :: Double)]
-                   , z `mod` x == 0]
+factors :: Integer -> [Integer]
+factors z = [x | x <- [1..ceiling (sqrt (fromInteger z) :: Double)]
+               , z `mod` x == 0]
+:}
+:{
+eGCD 0 b = (b, 0, 1)
+eGCD a b = let (g, s, t) = eGCD (b `mod` a) a
+           in (g, t - (b `div` a) * s, s)
 :}
