@@ -48,6 +48,9 @@ else
   call dein#add('Rip-Rip/clang_complete')
 endif
 
+" fasm
+call dein#add('RIscRIpt/vim-fasm-syntax')
+
 " Haskell
 call dein#add('neovimhaskell/haskell-vim')
 call dein#add('bitc/vim-hdevtools')
@@ -193,4 +196,11 @@ augroup c
   autocmd!
   autocmd FileType c setl noet sw=4 ts=8 omnifunc=ClangComplete
   autocmd FileType c setl cinoptions=>2s,p2s,t0,+4,(0,U1,:0,=2s
+augroup end
+
+" asm
+
+augroup asm
+  autocmd!
+  autocmd BufNewFile,BufRead *.asm setl ft=fasm ts=8 sw=8
 augroup end
