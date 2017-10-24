@@ -23,7 +23,6 @@ if dein#load_state('~/.vim/bundle')
 
   " UI
   call dein#add('scrooloose/nerdtree')
-  call dein#add('vim-syntastic/syntastic')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('sheerun/vim-wombat-scheme')
@@ -138,14 +137,6 @@ augroup sourcing
   autocmd!
   autocmd bufwritepost .vimrc source $MYVIMRC
 augroup end
-
-" Syntastic
-noremap <Leader>s :SyntasticToggleMode<CR>
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
 
 " Tagbar
 
