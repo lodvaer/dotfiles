@@ -27,6 +27,10 @@ if dein#load_state('~/.vim/bundle')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('sheerun/vim-wombat-scheme')
   call dein#add('rafi/awesome-vim-colorschemes')
+  call dein#add('mileszs/ack.vim')
+  call dein#add('/usr/share/vim/vimfiles')
+  call dein#add('junegunn/fzf.vim')
+  call dein#add('w0rp/ale')
 
   " Editing
   call dein#add('scrooloose/nerdcommenter')
@@ -58,10 +62,7 @@ if dein#load_state('~/.vim/bundle')
   call dein#add('bitc/vim-hdevtools')
   call dein#add('eagletmt/neco-ghc')
 
-  " call dein#add('majutsushi/tagbar')
   call dein#add('derekwyatt/vim-fswitch')
-
-  call dein#add('tpope/vim-fugitive')
 
   call dein#end()
   call dein#save_state()
@@ -107,6 +108,10 @@ let g:table_mode_corner="|"
 
 " Searching
 set incsearch ignorecase smartcase hlsearch
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+nmap <C-t> :Files<CR>
 
 " Theming
 set t_Co=256
@@ -119,6 +124,7 @@ let g:airline_theme = 'wombat'
 
 "" Airline
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
 
 " Navigation
 noremap <C-l> <C-w>l
@@ -138,9 +144,10 @@ augroup sourcing
   autocmd bufwritepost .vimrc source $MYVIMRC
 augroup end
 
-" Tagbar
-
-nmap <F8> :TagbarToggle<CR>
+" ALE
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_save = 0
 
 " Languages
 
@@ -234,3 +241,9 @@ augroup asm
   autocmd!
   autocmd BufNewFile,BufRead *.asm setl ft=fasm ts=8 sw=8
 augroup end
+
+" Host-local settings
+
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
