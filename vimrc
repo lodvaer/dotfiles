@@ -22,15 +22,18 @@ if dein#load_state('~/.vim/bundle')
   call dein#add('Shougo/vimproc.vim', { 'build': 'make' })
 
   " UI
-  call dein#add('scrooloose/nerdtree')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   call dein#add('sheerun/vim-wombat-scheme')
   call dein#add('rafi/awesome-vim-colorschemes')
+  call dein#add('w0rp/ale')
+
+  " Navigation
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('derekwyatt/vim-fswitch')
   call dein#add('mileszs/ack.vim')
   call dein#add('/usr/share/vim/vimfiles')
   call dein#add('junegunn/fzf.vim')
-  call dein#add('w0rp/ale')
 
   " Editing
   call dein#add('scrooloose/nerdcommenter')
@@ -61,8 +64,6 @@ if dein#load_state('~/.vim/bundle')
   call dein#add('neovimhaskell/haskell-vim')
   call dein#add('bitc/vim-hdevtools')
   call dein#add('eagletmt/neco-ghc')
-
-  call dein#add('derekwyatt/vim-fswitch')
 
   call dein#end()
   call dein#save_state()
@@ -133,7 +134,8 @@ noremap <C-k> <C-w>k
 noremap <C-j> <C-w>j
 noremap <C-n> :bn<CR>
 noremap <C-p> :bp<CR>
-noremap <Leader>n  :NERDTreeToggle<CR>
+noremap <Leader>n :NERDTreeToggle<CR>
+noremap <Leader>s :FSHere<CR>
 set mouse=nv
 
 let NERDTreeIgnore = ['\.pyc$', '\.egg-info$']
@@ -202,7 +204,6 @@ augroup end
 augroup markdown
   autocmd!
   autocmd FileType markdown setl sw=4 et foldmethod=indent
-  " TODO: test formatoptions+=t
 augroup end
 
 "" yaml
