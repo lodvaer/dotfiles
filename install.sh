@@ -9,7 +9,7 @@ for i in rsync vim make; do
 		err=1
 	fi
 done
-if [ -n "$DISPLAY" ]; then
+if [ -n "${DISPLAY:-}" ]; then
 	for i in st dmenu_run xdotool xclip; do
 		if [ ! -x "$(which $i)" ]; then
 			echo Probably needs $i >&2
@@ -64,14 +64,14 @@ if [ ! -d ~/.vim/bundle/repos/github.com/Shougo/dein.vim ]; then
 	vim +'call dein#install()' +qa'!'
 fi
 
-if [ -n "$DISPLAY" -a ! -d ~/.local/share/fonts/googlefonts ]; then
+if [ -n "${DISPLAY:-}" -a ! -d ~/.local/share/fonts/googlefonts ]; then
 	mkdir -p ~/.local/share/fonts
 	cd ~/.local/share/fonts
 	git clone https://github.com/google/fonts googlefonts
 	git clone https://github.com/powerline/fonts powerline-fonts
 	fc-cache -fv
 	cd - >/dev/null
-elif [ -n "$DISPLAY" ]; then
+elif [ -n "${DISPLAY:-}" ]; then
 	olddir="$PWD"
 	cd ~/.local/share/fonts
 	p=.git/refs/heads/master
