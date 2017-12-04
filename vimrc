@@ -60,6 +60,9 @@ if dein#load_state('~/.vim/bundle')
     call dein#add('Rip-Rip/clang_complete')
   endif
 
+  " Rust
+  call dein#add('rust-lang/rust.vim')
+
   " Haskell
   call dein#add('neovimhaskell/haskell-vim')
   call dein#add('bitc/vim-hdevtools')
