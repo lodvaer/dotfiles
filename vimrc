@@ -24,7 +24,7 @@ if dein#load_state('~/.vim/bundle')
   " UI
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
-  call dein#add('sheerun/vim-wombat-scheme')
+  call dein#add('tyrannicaltoucan/vim-quantum')
   call dein#add('rafi/awesome-vim-colorschemes')
   call dein#add('w0rp/ale')
 
@@ -120,8 +120,11 @@ hi ColorColumn guibg=#442222 ctermbg=10
 set list listchars=tab:-\ ,trail:~,extends:>,precedes:<,nbsp:+
 set number
 
-colorscheme wombat
-let g:airline_theme = 'wombat'
+set background=dark
+set termguicolors
+let g:quantum_black=1
+colorscheme quantum
+let g:airline_theme = 'quantum'
 
 "" Airline
 let g:airline_powerline_fonts = 1
@@ -241,6 +244,12 @@ augroup end
 augroup asm
   autocmd!
   autocmd BufNewFile,BufRead *.asm setl ft=fasm ts=8 sw=8
+augroup end
+
+" lua
+augroup lua
+  autocmd!
+  autocmd FileType lua setl et sw=2 ts=2
 augroup end
 
 " Host-local settings

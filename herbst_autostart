@@ -19,17 +19,15 @@ Mod=Mod1    # Use alt as the main modifier
 #Mod=Mod4   # Use the super key as the main modifier
 
 if [ "$HOSTNAME" == "aspergoid" ]; then
-	fontsize=13
+	fontsize=16
 else
-	fontsize=10
+	fontsize=13
 fi
 
 # hc keybind $Mod-Shift-q quit
 hc keybind $Mod-Shift-r reload
 hc keybind $Mod-Shift-c close
-hc keybind $Mod-Return spawn \
-	urxvt -tr -sh 100 -tint '#2b1b06' \
-	+vb -sl 5000 +sb -fn xft:inconsolata:size=$fontsize
+hc keybind $Mod-Return spawn st -f "Liberation Mono:pixelsize=$fontsize:antialias=true:autohint=true"
 hc keybind $Mod-q spawn dmenu_run
 hc keybind $Mod-Insert spawn ~/bin/paste
 hc keybind $Mod-n spawn slock
